@@ -1,9 +1,13 @@
 package com.example.todo.payload.request;
 
 public class DeleteRequest {
-    private String _id;
+    private String id;
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

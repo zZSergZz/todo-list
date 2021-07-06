@@ -24,19 +24,19 @@ public class TodoController {
     @Autowired
     TodoRepository todoRepository;
 
-    @PostMapping(value="/todo-list/delete")
+    @PostMapping(value="/delete")
     public ResponseEntity<?> deleteModel(@RequestBody DeleteRequest deleteRequest) {
-        todoService.deleteById(deleteRequest.get_id());
+        todoService.deleteById(deleteRequest.getId());
         return ResponseEntity.ok(new DeleteResponse("Туду успешно удалена!"));
     }
     
-    @PostMapping(value="/todo-list/todo")
+    @PostMapping(value="/todo")
     public ModelAndView todoModel(HttpServletRequest request, HttpServletResponse response, CreateRequest createRequest){
 
         ModelAndView mav = new  ModelAndView("todo");
         return mav;
     }
-    @RequestMapping(value="/todo-list/todo",method = RequestMethod.GET)
+    @RequestMapping(value="/todo",method = RequestMethod.GET)
     public ModelAndView todo(HttpServletRequest request, HttpServletResponse response, CreateRequest createRequest)
     {
         ModelAndView mav = new  ModelAndView("todo");
@@ -46,19 +46,32 @@ public class TodoController {
         return mav;
     }
 
-    @PostMapping(value="/todo-list/todo-create")
+    @PostMapping(value="/todo-delete")
+    public ModelAndView todoDeleteModel(DeleteRequest deleteRequest){
+
+        ModelAndView mav = new  ModelAndView("redirect:http://localhost:8080/api/todo");
+
+        todoService.deleteById(deleteRequest.getId());
+        return mav;
+    }
+    @RequestMapping(value="/todo-delete",method = RequestMethod.GET)
+    public ModelAndView todoDelete(HttpServletRequest request, HttpServletResponse response)
+    {
+        ModelAndView mav = new  ModelAndView("redirect:http://localhost:8080/api/todo");
+        return mav;
+    }
+
+    @PostMapping(value="/todo-create")
     public ModelAndView todoCreateModel(CreateRequest createRequest){
 
-        ModelAndView mav = new  ModelAndView("redirect:http://localhost:8080/api/todo-list/todo");
-
+        ModelAndView mav = new  ModelAndView("redirect:http://localhost:8080/api/todo");
         todoService.createTodo(createRequest.getText());
-        System.out.println(createRequest.getText());
         return mav;
     }
     @RequestMapping(value="/todo-create",method = RequestMethod.GET)
     public ModelAndView todoCreate(HttpServletRequest request, HttpServletResponse response)
     {
-        ModelAndView mav = new  ModelAndView("redirect:http://localhost:8080/api/todo-list/todo");
+        ModelAndView mav = new  ModelAndView("redirect:http://localhost:8080/api/todo");
         return mav;
     }
 

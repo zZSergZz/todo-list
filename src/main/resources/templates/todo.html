@@ -6,7 +6,7 @@
     <title>Todo list</title>
 </head>
 <body>
-<form th:action="@{/api/todo-list/todo-create}" method="post">
+<form th:action="@{/api/todo-create}" method="post">
     <div><label> Введите текст : <input type="text" name="text"/> </label></div>
     <div><input type="submit" value="Отправить"/></div>
 </form>
@@ -22,7 +22,12 @@ Todo list
         <td th:text="${todos._id}"> </td>
         <td th:text="${todos.text}"></td>
         <td>
-            <button>Удалить</button>
+            <button>
+                <form th:action="@{/api/todo-delete}" method="post">
+                    <div><label><input hidden type="text" name="id" th:value="${todos._id}"/> </label></div>
+                    <div><input type="submit" value="Удалить"/></div>
+                </form>
+            </button>
         </td>
     </tr>
 </table>
